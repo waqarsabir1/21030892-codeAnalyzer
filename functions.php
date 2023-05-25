@@ -55,10 +55,7 @@ function showMessage($msgtype, $msg){
    }
 }
 
-function getProcessorsRS(){
-       $processorStr = "SELECT  * FROM tblusers where user_type = 'Processor'";    
-        return $processorRs    = Run($processorStr); 
-}
+ 
 
 function lastInsertId() {
     global $con;
@@ -107,20 +104,7 @@ function getRows($table){
     $str = "select * from $table order by id desc";
     return $strRs = Run($str);
 }
- 
-function getNewChatRow($limit){
-    $str    = "select * from tblchats where seen = '0' order by post_date asc limit $limit";
-    $strRs  = Run($str);
-    return $strRs;
-
- } 
- function countChat(){
-     $str    = "select * from tblchats where seen = '0'";
-     $strRs =  Run($str);
-     $record = getRecord($strRs);
-     return $record;
- }
- 
+  
  function getValue($value){
     if(isset($_REQUEST[$value])){
         return $value = $_REQUEST[$value];
@@ -140,23 +124,13 @@ function getNewChatRow($limit){
         return "<span class='btn btn-success'>Active</span>";
     }
 }
- 
-function updateChatNotification($ID){
-    $ID =  $ID;
-    $str = "update tblchats set seen = 1 where ticket_id = '$ID'"; 
-    Run($str);
-}
+  
 
 function deleteRecord($table, $ID){
     $str = "delete from $table where id = $ID";
     Run($str);
 }
-
-function deleteChat($del){
-    $str = "delete from tblchats where ticket_id = $del";
-    Run($str);
-}
-
+ 
 function getUserRow(){
     $str    = "select * from tblusers order by id desc";
     $strRs =  Run($str);
@@ -175,14 +149,7 @@ function getAllRow($table){
     $strRs =  Run($str); 
     return $strRs;
 }
-
-function getDepartmentAdminEmail($department_type){
-    $str    = "select * from tblusers where department_id = '$department_type'";
-    $strRs  =  Run($str); 
-    $strRow = getRow($strRs);
-    return $strRow;
-}
-
+ 
 function isAdmin(){
     if(isset($_SESSION['user_type'])){ 
         $role = $_SESSION['user_type']; 
@@ -193,20 +160,7 @@ function isAdmin(){
              return false;
         }
     }
-}
-function isLoanOfficer(){
-    
-    if(isset($_SESSION['user_type'])){
-        $role = $_SESSION['user_type'];
-        if($role == 'Loan Officer'){
-            return true;
-        }
-        else{
-             return false;
-        }
-    }
-}
-
+} 
 function checkLogin(){
     if($_SESSION['user_id'] == ""){
         echo "<script>window.location.href = 'login.php';</script>";
